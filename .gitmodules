@@ -22,7 +22,3 @@
 	path = caches/dandi-validations
 	url = https://github.com/dandi-cache/dandi-validations.git
 	datalad-url = https://github.com/dandi-cache/dandi-validations.git
-[submodule "caches/content-id-to-dandiset-paths-old"]
-	path = caches/content-id-to-dandiset-paths-old
-	url = https://github.com/dandi-cache/content-id-to-dandiset-paths-old.git
-	datalad-url = https://github.com/dandi-cache/content-id-to-dandiset-paths-old.git

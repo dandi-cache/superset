@@ -28,7 +28,7 @@ datalad get -n -r .
 Some caches publish their data on dedicated branches (see the listing below); after `datalad get`, check out the relevant branch inside the subdataset, e.g.:
 
 ```shell
-git -C caches/content-id-to-unique-dandiset-path checkout min
+git -C caches/content-id-to-unique-dandiset-path checkout derivatives
 ```
 
 To refresh previously retrieved caches to their latest state:
@@ -47,9 +47,8 @@ datalad update --how merge -r
 | [usage-dandiset-path-to-asset-size](https://github.com/dandi-cache/usage-dandiset-path-to-asset-size) | Map each asset in usage-dandiset-path to its size in bytes. | `main` | Active |
 | [qualifying-aind-content-ids](https://github.com/dandi-cache/qualifying-aind-content-ids) | A subset of `content-id-to-nwb-files` which have been identified to qualify for the AIND ephys pipeline. | `derivatives`, `dist` | Active |
 | [dandi-validations](https://github.com/dandi-cache/dandi-validations) | Derivative dataset of validation outputs for all published Dandiset versions. | `main` | Active |
-| [content-id-to-dandiset-paths-old](https://github.com/dandi-cache/content-id-to-dandiset-paths-old) | A cache of the content ID relationship to current Dandiset paths. | `min` | Superseded by `content-id-to-dandiset-paths` |
 
-Also of interest: [cache-template](https://github.com/dandi-cache/cache-template) — a common template with suggested structure, layout, and mechanisms for a typical DANDI Cache (not a data cache itself, so not registered as a subdataset).
+Also of interest: [cache-template](https://github.com/dandi-cache/cache-template), the common template with standardized structure, layout, and mechanisms for a typical DANDI Cache (though it is not a data cache itself, so it is not registered as a subdataset).
 
 Check the `README` in each repository for cache-specific usage instructions.
 
