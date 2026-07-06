@@ -4,8 +4,6 @@ This repository is the master listing of all [DANDI Cache](https://github.com/da
 
 It is also a [DataLad](https://www.datalad.org/) superdataset: every cache is registered as a subdataset under [`caches/`](./caches), so the entire collection can be retrieved immediately with a couple of commands.
 
-A machine-readable version of this listing is available in [`listing.json`](./listing.json).
-
 ## Retrieval with DataLad
 
 Install the whole collection (lightweight — subdatasets are not downloaded until requested):
