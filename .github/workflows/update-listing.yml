@@ -1,0 +1,44 @@
+name: Update master listing pins
+
+on:
+  schedule:
+    - cron: "25 5 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: update-listing
+  cancel-in-progress: true
+
+jobs:
+  update-pins:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Advance subdataset pins to latest default branch
+        run: |
+          set -euo pipefail
+          changed=0
+          for path in $(git config --file .gitmodules --get-regexp '^submodule\..*\.path$' | awk '{print $2}'); do
+            url=$(git config --file .gitmodules --get "submodule.${path}.url")
+            latest=$(git ls-remote "${url}" HEAD | awk '{print $1}')
+            current=$(git rev-parse ":${path}")
+            if [ -n "${latest}" ] && [ "${latest}" != "${current}" ]; then
+              echo "Updating ${path}: ${current} -> ${latest}"
+              git update-index --add --cacheinfo "160000,${latest},${path}"
+              changed=1
+            fi
+          done
+          if [ "${changed}" = "1" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Advance cache subdataset pins to latest state"
+            git push origin main
+          else
+            echo "All subdataset pins already up to date."
+          fi

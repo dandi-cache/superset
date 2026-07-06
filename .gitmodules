@@ -1,0 +1,28 @@
+[submodule "caches/content-id-to-dandiset-paths"]
+	path = caches/content-id-to-dandiset-paths
+	url = https://github.com/dandi-cache/content-id-to-dandiset-paths.git
+	datalad-url = https://github.com/dandi-cache/content-id-to-dandiset-paths.git
+[submodule "caches/content-id-to-unique-dandiset-path"]
+	path = caches/content-id-to-unique-dandiset-path
+	url = https://github.com/dandi-cache/content-id-to-unique-dandiset-path.git
+	datalad-url = https://github.com/dandi-cache/content-id-to-unique-dandiset-path.git
+[submodule "caches/content-id-to-usage-dandiset-path"]
+	path = caches/content-id-to-usage-dandiset-path
+	url = https://github.com/dandi-cache/content-id-to-usage-dandiset-path.git
+	datalad-url = https://github.com/dandi-cache/content-id-to-usage-dandiset-path.git
+[submodule "caches/usage-dandiset-path-to-asset-size"]
+	path = caches/usage-dandiset-path-to-asset-size
+	url = https://github.com/dandi-cache/usage-dandiset-path-to-asset-size.git
+	datalad-url = https://github.com/dandi-cache/usage-dandiset-path-to-asset-size.git
+[submodule "caches/qualifying-aind-content-ids"]
+	path = caches/qualifying-aind-content-ids
+	url = https://github.com/dandi-cache/qualifying-aind-content-ids.git
+	datalad-url = https://github.com/dandi-cache/qualifying-aind-content-ids.git
+[submodule "caches/dandi-validations"]
+	path = caches/dandi-validations
+	url = https://github.com/dandi-cache/dandi-validations.git
+	datalad-url = https://github.com/dandi-cache/dandi-validations.git
+[submodule "caches/content-id-to-dandiset-paths-old"]
+	path = caches/content-id-to-dandiset-paths-old
+	url = https://github.com/dandi-cache/content-id-to-dandiset-paths-old.git
+	datalad-url = https://github.com/dandi-cache/content-id-to-dandiset-paths-old.git
