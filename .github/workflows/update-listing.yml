@@ -14,9 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      # Read here rather than in the notification step, because a step's `if` cannot see the
+      # `secrets` context. This keeps the mail step from failing the job on a fork or in a
+      # repository where the credentials are not configured.
+      MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: main
 
@@ -24,16 +29,35 @@ jobs:
         run: |
           set -euo pipefail
           changed=0
+          unreachable=""
           for path in $(git config --file .gitmodules --get-regexp '^submodule\..*\.path$' | awk '{print $2}'); do
             url=$(git config --file .gitmodules --get "submodule.${path}.url")
-            latest=$(git ls-remote "${url}" HEAD | awk '{print $1}')
+            # One unreachable remote must not cost every other cache its update, so the failure is
+            # collected and the loop goes on. It is still reported: the job fails at the end, which
+            # is what gets a deleted or renamed cache noticed instead of silently freezing the
+            # listing. `if !` keeps `set -e` from aborting here.
+            if ! remote=$(git ls-remote "${url}" HEAD 2>&1); then
+              echo "::warning::${path}: cannot reach ${url}"
+              printf '%s\n' "${remote}"
+              unreachable="${unreachable} ${path}"
+              continue
+            fi
+            latest=$(printf '%s\n' "${remote}" | awk 'NR==1 {print $1}')
+            if [ -z "${latest}" ]; then
+              echo "::warning::${path}: ${url} reports no HEAD"
+              unreachable="${unreachable} ${path}"
+              continue
+            fi
             current=$(git rev-parse ":${path}")
-            if [ -n "${latest}" ] && [ "${latest}" != "${current}" ]; then
+            if [ "${latest}" != "${current}" ]; then
               echo "Updating ${path}: ${current} -> ${latest}"
               git update-index --add --cacheinfo "160000,${latest},${path}"
               changed=1
             fi
           done
+
+          # Push before reporting any unreachable remote, so the pins that did advance are kept
+          # even on a run that ends in failure.
           if [ "${changed}" = "1" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -42,3 +66,21 @@ jobs:
           else
             echo "All subdataset pins already up to date."
           fi
+
+          if [ -n "${unreachable}" ]; then
+            echo "::error::Unreachable submodule remotes:${unreachable}"
+            exit 1
+          fi
+
+      - name: Notify on failure
+        if: ${{ failure() && env.MAIL_USERNAME != '' }}
+        uses: dawidd6/action-send-mail@v18
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "CI Failure: DANDI Cache: superset master listing pins"
+          to: cody.c.baker.phd@gmail.com
+          from: DANDI Cache <dandi-cache@users.noreply.github.com>
+          body: "Please check the latest master listing pin update of the DANDI Cache superset: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
