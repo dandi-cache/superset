@@ -18,3 +18,5 @@ repos:
   rev: v2.4.2
   hooks:
   - id: codespell
+    # "Sackin" is a proper name (the Sackin tree-imbalance index), not a misspelling of "sacking".
+    args: ["--ignore-words-list=sackin"]

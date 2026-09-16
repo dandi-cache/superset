@@ -2,23 +2,63 @@
 	path = caches/content-id-to-dandiset-paths
 	url = https://github.com/dandi-cache/content-id-to-dandiset-paths.git
 	datalad-url = https://github.com/dandi-cache/content-id-to-dandiset-paths.git
-[submodule "caches/content-id-to-unique-dandiset-path"]
-	path = caches/content-id-to-unique-dandiset-path
-	url = https://github.com/dandi-cache/content-id-to-unique-dandiset-path.git
-	datalad-url = https://github.com/dandi-cache/content-id-to-unique-dandiset-path.git
+[submodule "caches/content-id-to-nwb-file"]
+	path = caches/content-id-to-nwb-file
+	url = https://github.com/dandi-cache/content-id-to-nwb-file.git
+	datalad-url = https://github.com/dandi-cache/content-id-to-nwb-file.git
 [submodule "caches/content-id-to-usage-dandiset-path"]
 	path = caches/content-id-to-usage-dandiset-path
 	url = https://github.com/dandi-cache/content-id-to-usage-dandiset-path.git
 	datalad-url = https://github.com/dandi-cache/content-id-to-usage-dandiset-path.git
-[submodule "caches/usage-dandiset-path-to-asset-size"]
-	path = caches/usage-dandiset-path-to-asset-size
-	url = https://github.com/dandi-cache/usage-dandiset-path-to-asset-size.git
-	datalad-url = https://github.com/dandi-cache/usage-dandiset-path-to-asset-size.git
+[submodule "caches/content-id-to-valid-nwb-file"]
+	path = caches/content-id-to-valid-nwb-file
+	url = https://github.com/dandi-cache/content-id-to-valid-nwb-file.git
+	datalad-url = https://github.com/dandi-cache/content-id-to-valid-nwb-file.git
+[submodule "caches/dandiset-id-to-number-of-assets"]
+	path = caches/dandiset-id-to-number-of-assets
+	url = https://github.com/dandi-cache/dandiset-id-to-number-of-assets.git
+	datalad-url = https://github.com/dandi-cache/dandiset-id-to-number-of-assets.git
+[submodule "caches/dandiset-id-to-title"]
+	path = caches/dandiset-id-to-title
+	url = https://github.com/dandi-cache/dandiset-id-to-title.git
+	datalad-url = https://github.com/dandi-cache/dandiset-id-to-title.git
+[submodule "caches/dandiset-id-to-total-size"]
+	path = caches/dandiset-id-to-total-size
+	url = https://github.com/dandi-cache/dandiset-id-to-total-size.git
+	datalad-url = https://github.com/dandi-cache/dandiset-id-to-total-size.git
 [submodule "caches/qualifying-aind-content-ids"]
 	path = caches/qualifying-aind-content-ids
 	url = https://github.com/dandi-cache/qualifying-aind-content-ids.git
 	datalad-url = https://github.com/dandi-cache/qualifying-aind-content-ids.git
-[submodule "caches/dandi-validations"]
-	path = caches/dandi-validations
-	url = https://github.com/dandi-cache/dandi-validations.git
-	datalad-url = https://github.com/dandi-cache/dandi-validations.git
+[submodule "caches/qualifying-lfp-content-ids"]
+	path = caches/qualifying-lfp-content-ids
+	url = https://github.com/dandi-cache/qualifying-lfp-content-ids.git
+	datalad-url = https://github.com/dandi-cache/qualifying-lfp-content-ids.git
+[submodule "caches/usage-dandiset-path-to-asset-size"]
+	path = caches/usage-dandiset-path-to-asset-size
+	url = https://github.com/dandi-cache/usage-dandiset-path-to-asset-size.git
+	datalad-url = https://github.com/dandi-cache/usage-dandiset-path-to-asset-size.git
+[submodule "caches/valid-nwb-file-to-chunk-stats"]
+	path = caches/valid-nwb-file-to-chunk-stats
+	url = https://github.com/dandi-cache/valid-nwb-file-to-chunk-stats.git
+	datalad-url = https://github.com/dandi-cache/valid-nwb-file-to-chunk-stats.git
+[submodule "caches/valid-nwb-file-to-cophenetic-index"]
+	path = caches/valid-nwb-file-to-cophenetic-index
+	url = https://github.com/dandi-cache/valid-nwb-file-to-cophenetic-index.git
+	datalad-url = https://github.com/dandi-cache/valid-nwb-file-to-cophenetic-index.git
+[submodule "caches/valid-nwb-file-to-number-of-datasets"]
+	path = caches/valid-nwb-file-to-number-of-datasets
+	url = https://github.com/dandi-cache/valid-nwb-file-to-number-of-datasets.git
+	datalad-url = https://github.com/dandi-cache/valid-nwb-file-to-number-of-datasets.git
+[submodule "caches/valid-nwb-file-to-number-of-groups"]
+	path = caches/valid-nwb-file-to-number-of-groups
+	url = https://github.com/dandi-cache/valid-nwb-file-to-number-of-groups.git
+	datalad-url = https://github.com/dandi-cache/valid-nwb-file-to-number-of-groups.git
+[submodule "caches/valid-nwb-file-to-out-degrees"]
+	path = caches/valid-nwb-file-to-out-degrees
+	url = https://github.com/dandi-cache/valid-nwb-file-to-out-degrees.git
+	datalad-url = https://github.com/dandi-cache/valid-nwb-file-to-out-degrees.git
+[submodule "caches/valid-nwb-file-to-sackin-index"]
+	path = caches/valid-nwb-file-to-sackin-index
+	url = https://github.com/dandi-cache/valid-nwb-file-to-sackin-index.git
+	datalad-url = https://github.com/dandi-cache/valid-nwb-file-to-sackin-index.git
