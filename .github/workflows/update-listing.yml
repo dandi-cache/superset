@@ -72,6 +72,22 @@ jobs:
             exit 1
           fi
 
+      # Runs even when a remote above was unreachable, since the pins that did advance were pushed
+      # and the rest of the table is still worth refreshing; that cache's row then says so.
+      - name: Refresh the status table
+        if: ${{ !cancelled() }}
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/render_status.py
+          if git diff --quiet README.md; then
+            echo "Status table unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Refresh the cache status table" README.md
+          git push origin main
+
       - name: Notify on failure
         if: ${{ failure() && env.MAIL_USERNAME != '' }}
         uses: dawidd6/action-send-mail@v22
