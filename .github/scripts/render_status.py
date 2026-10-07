@@ -7,7 +7,10 @@ For every cache in `.gitmodules` this reads, without downloading anything it doe
 - when its data last changed, from the head commit of `derivatives`;
 - for each upstream cache it reads, when the version it last computed from was published, from the
   `sourcedata/` subdataset pins on `derivatives`. A cache whose source is the archive itself pins
-  none, and shows a dash.
+  none, and shows a dash;
+- its largest file on either branch, against GitHub's 100 MiB limit for one file. A push carrying a
+  file past it is refused, so every file past `WARNING_FRACTION` of it is reported as an
+  annotation, and as the `size-warnings` step output the workflow sends an email for.
 
 Only the standard library and `git` are used, so the workflow needs no environment of its own. The
 table is written between the two markers below and nothing else in the README is touched.
@@ -15,6 +18,7 @@ table is written between the two markers below and nothing else in the README is
 
 import datetime
 import gzip
+import os
 import pathlib
 import subprocess
 import sys
@@ -23,6 +27,15 @@ import tempfile
 START = "<!-- status:start -->"
 END = "<!-- status:end -->"
 ROOT = pathlib.Path(__file__).resolve().parents[2]
+
+#: GitHub refuses any file over 100 MiB, and a cache pushes only after a run's work is done.
+GITHUB_FILE_LIMIT_BYTES = 100 * 1024 * 1024
+#: Past this fraction a file is reported. At the largest caches' growth, about 2 MB a day, that
+#: leaves a week or more to declare the output in `split` in its `cache.toml`.
+WARNING_FRACTION = 0.8
+
+#: Every file past `WARNING_FRACTION` of the limit, as one line each, collected while rendering.
+SIZE_WARNINGS: list[str] = []
 
 
 def git(*arguments: str, cwd: pathlib.Path | None = None, binary: bool = False) -> str | bytes:
@@ -91,6 +104,27 @@ class Remotes(dict):
         return self[name]
 
 
+def largest_file(name: str, branch: str, tree: list[tuple[str, str, str, str]]) -> tuple[int, str]:
+    """The largest file on one branch, recording a warning when it is near GitHub's limit."""
+    size, path = max(((int(size), path) for kind, _, size, path in tree if kind == "blob"), default=(0, ""))
+    if size > WARNING_FRACTION * GITHUB_FILE_LIMIT_BYTES:
+        state = "past" if size > GITHUB_FILE_LIMIT_BYTES else "approaching"
+        warning = (
+            f"{name}: {branch}:{path} is {size / 1e6:.1f} MB, {size / GITHUB_FILE_LIMIT_BYTES:.0%} of GitHub's "
+            f"100 MiB limit for one file; it is {state} the size at which every push is refused."
+        )
+        print(f"::warning title=File size near GitHub's limit::{warning}")
+        SIZE_WARNINGS.append(warning)
+    return size, path
+
+
+def headroom(size: int) -> str:
+    """A file's size against the limit, flagged once it is past the warning fraction."""
+    fraction = size / GITHUB_FILE_LIMIT_BYTES
+    flag = " 🛑" if fraction > 1 else " ⚠️" if fraction > WARNING_FRACTION else ""
+    return f"{human_size(size)} ({fraction:.0%}){flag}"
+
+
 def row(name: str, remotes: Remotes) -> str:
     link = f"[{name}](https://github.com/dandi-cache/{name})"
     remote = remotes[name]
@@ -98,11 +132,13 @@ def row(name: str, remotes: Remotes) -> str:
         remote.fetch("derivatives", "dist")
     except subprocess.CalledProcessError as error:
         print(f"::warning::{name}: cannot read its data branches: {error.stderr.decode().strip()}")
-        return f"| {link} | unavailable | | | |"
+        return f"| {link} | unavailable | | | | |"
 
+    dist_tree = remote.tree("refs/remotes/origin/dist")
+    largest_file(name, "dist", dist_tree)
     bundles = [
         (sha, int(size))
-        for kind, sha, size, path in remote.tree("refs/remotes/origin/dist")
+        for kind, sha, size, path in dist_tree
         if kind == "blob" and path.endswith(".jsonl.gz") and not pathlib.PurePath(path).name.startswith("testing")
     ]
     entries = sum(len(gzip.decompress(remote.blob(sha)).splitlines()) for sha, _ in bundles)
@@ -111,8 +147,11 @@ def row(name: str, remotes: Remotes) -> str:
     derivatives = git("rev-parse", "refs/remotes/origin/derivatives", cwd=remote.directory)
     updated = remote.committed_at(derivatives)
 
+    derivatives_tree = remote.tree(derivatives)
+    largest, _ = largest_file(name, "derivatives", derivatives_tree)
+
     sources = []
-    for kind, sha, _, path in remote.tree(derivatives):
+    for kind, sha, _, path in derivatives_tree:
         if kind != "commit" or not path.startswith("sourcedata/"):
             continue
         upstream = pathlib.PurePath(path).name
@@ -123,14 +162,14 @@ def row(name: str, remotes: Remotes) -> str:
             sources.append(f"{upstream}: unavailable")
     source_cell = "<br>".join(sources) if sources else "—"
 
-    return f"| {link} | {entries:,} | {human_size(size)} | {when(updated)} | {source_cell} |"
+    return f"| {link} | {entries:,} | {human_size(size)} | {headroom(largest)} | {when(updated)} | {source_cell} |"
 
 
 def render() -> str:
     lines = [
         START,
-        "| Cache | Entries | Compressed size | Last updated (UTC) | Source data as of (UTC) |",
-        "| --- | ---: | ---: | --- | --- |",
+        "| Cache | Entries | Compressed size | Largest file on `derivatives` (of 100 MiB) | Last updated (UTC) | Source data as of (UTC) |",
+        "| --- | ---: | ---: | ---: | --- | --- |",
     ]
     with tempfile.TemporaryDirectory() as scratch:
         remotes = Remotes(pathlib.Path(scratch))
@@ -149,6 +188,13 @@ def main() -> None:
     before, rest = text.split(START, 1)
     _, after = rest.split(END, 1)
     readme.write_text(before + render() + after)
+
+    output_path = os.environ.get("GITHUB_OUTPUT")
+    if SIZE_WARNINGS and output_path:
+        with open(output_path, mode="a") as output:
+            output.write("size-warnings<<SIZE_WARNINGS_END\n")
+            output.writelines(f"{warning}\n" for warning in SIZE_WARNINGS)
+            output.write("SIZE_WARNINGS_END\n")
 
 
 if __name__ == "__main__":

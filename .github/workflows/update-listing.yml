@@ -75,6 +75,7 @@ jobs:
       # Runs even when a remote above was unreachable, since the pins that did advance were pushed
       # and the rest of the table is still worth refreshing; that cache's row then says so.
       - name: Refresh the status table
+        id: status
         if: ${{ !cancelled() }}
         run: |
           set -euo pipefail
@@ -87,6 +88,25 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Refresh the cache status table" README.md
           git push origin main
+
+      # One check across every cache, whatever version of dandi-cache-action it runs: a file past 80%
+      # of GitHub's 100 MiB limit on `derivatives` or `dist` is reported here every day until it is
+      # dealt with, usually by declaring it in `split` in that cache's `cache.toml`.
+      - name: Notify on files nearing GitHub's size limit
+        if: ${{ !cancelled() && env.MAIL_USERNAME != '' && steps.status.outputs.size-warnings != '' }}
+        uses: dawidd6/action-send-mail@v22
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "Size warning: DANDI Cache: files nearing GitHub's 100 MiB limit"
+          to: cody.c.baker.phd@gmail.com
+          from: DANDI Cache <dandi-cache@users.noreply.github.com>
+          body: |
+            ${{ steps.status.outputs.size-warnings }}
+            Declare a growing output in `split` in its cache's `cache.toml` to keep it as sixteen files on `derivatives`; `dist` still publishes it as one.
+            Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Notify on failure
         if: ${{ failure() && env.MAIL_USERNAME != '' }}
