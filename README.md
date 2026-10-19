@@ -72,24 +72,24 @@ How large each cache is and how fresh, read from its published branches each tim
 <!-- status:start -->
 | Cache | Entries | Compressed size | Largest file on `derivatives` (of 100 MiB) | Last updated (UTC) | Source data as of (UTC) |
 | --- | ---: | ---: | ---: | --- | --- |
-| [content-id-to-dandiset-paths](https://github.com/dandi-cache/content-id-to-dandiset-paths) | 604,691 | 26.3 MB | 80.0 MB (76%) | 2026-10-18 04:17 | — |
-| [content-id-to-nwb-file](https://github.com/dandi-cache/content-id-to-nwb-file) | 233,063 | 9.8 MB | 80.0 MB (76%) | 2026-10-18 05:47 | content-id-to-usage-dandiset-path: 2026-10-18 05:06 |
-| [content-id-to-usage-dandiset-path](https://github.com/dandi-cache/content-id-to-usage-dandiset-path) | 614,868 | 26.0 MB | 80.0 MB (76%) | 2026-10-18 05:06 | content-id-to-dandiset-paths: 2026-10-18 04:17 |
-| [content-id-to-valid-nwb-file](https://github.com/dandi-cache/content-id-to-valid-nwb-file) | 527,808 | 20.8 MB | 80.0 MB (76%) | 2026-10-18 07:26 | content-id-to-nwb-file: 2026-10-18 05:47 |
-| [dandiset-id-to-number-of-assets](https://github.com/dandi-cache/dandiset-id-to-number-of-assets) | 2,244 | 6.7 KB | 80.0 MB (76%) | 2026-10-18 04:32 | — |
-| [dandiset-id-to-title](https://github.com/dandi-cache/dandiset-id-to-title) | 2,244 | 28.7 KB | 80.0 MB (76%) | 2026-10-18 04:21 | — |
-| [dandiset-id-to-total-size](https://github.com/dandi-cache/dandiset-id-to-total-size) | 666 | 6.0 KB | 80.0 MB (76%) | 2026-10-18 06:39 | content-id-to-usage-dandiset-path: 2026-10-18 05:06<br>usage-dandiset-path-to-asset-size: 2026-10-18 06:02 |
-| [qualifying-aind-content-ids](https://github.com/dandi-cache/qualifying-aind-content-ids) | 3,241 | 71.7 KB | 80.0 MB (76%) | 2026-10-18 05:14 | content-id-to-usage-dandiset-path: 2026-10-18 05:06<br>content-id-to-valid-nwb-file: 2026-10-18 00:16<br>qualifying-lfp-content-ids: 2026-10-18 04:41 |
-| [qualifying-lfp-content-ids](https://github.com/dandi-cache/qualifying-lfp-content-ids) | 171,405 | 3.6 MB | 80.0 MB (76%) | 2026-10-18 04:41 | content-id-to-nwb-file: 2026-10-17 21:25<br>content-id-to-valid-nwb-file: 2026-10-18 00:16 |
-| [usage-dandiset-path-to-asset-size](https://github.com/dandi-cache/usage-dandiset-path-to-asset-size) | 600,572 | 14.9 MB | 80.0 MB (76%) | 2026-10-18 06:02 | content-id-to-usage-dandiset-path: 2026-10-18 05:06 |
-| [valid-nwb-file-to-chunk-stats](https://github.com/dandi-cache/valid-nwb-file-to-chunk-stats) | 167,264 | 5.5 MB | 80.0 MB (76%) | 2026-10-18 09:42 | content-id-to-valid-nwb-file: 2026-10-18 00:16 |
-| [valid-nwb-file-to-cophenetic-index](https://github.com/dandi-cache/valid-nwb-file-to-cophenetic-index) | 171,339 | 3.9 MB | 80.0 MB (76%) | 2026-10-18 05:12 | content-id-to-valid-nwb-file: 2026-10-18 00:16 |
-| [valid-nwb-file-to-number-of-datasets](https://github.com/dandi-cache/valid-nwb-file-to-number-of-datasets) | 171,405 | 3.8 MB | 80.0 MB (76%) | 2026-10-18 05:51 | content-id-to-valid-nwb-file: 2026-10-18 00:16 |
-| [valid-nwb-file-to-number-of-groups](https://github.com/dandi-cache/valid-nwb-file-to-number-of-groups) | 171,405 | 3.8 MB | 80.0 MB (76%) | 2026-10-18 06:03 | content-id-to-valid-nwb-file: 2026-10-18 00:16 |
-| [valid-nwb-file-to-out-degrees](https://github.com/dandi-cache/valid-nwb-file-to-out-degrees) | 171,339 | 5.6 MB | 80.0 MB (76%) | 2026-10-18 06:41 | content-id-to-valid-nwb-file: 2026-10-18 00:16 |
-| [valid-nwb-file-to-sackin-index](https://github.com/dandi-cache/valid-nwb-file-to-sackin-index) | 171,405 | 4.3 MB | 80.0 MB (76%) | 2026-10-18 06:20 | content-id-to-valid-nwb-file: 2026-10-18 00:16 |
+| [content-id-to-dandiset-paths](https://github.com/dandi-cache/content-id-to-dandiset-paths) | 604,692 | 26.3 MB | 80.0 MB (76%) | 2026-10-19 04:27 | — |
+| [content-id-to-nwb-file](https://github.com/dandi-cache/content-id-to-nwb-file) | 233,063 | 9.8 MB | 80.0 MB (76%) | 2026-10-19 06:04 | content-id-to-usage-dandiset-path: 2026-10-19 05:16 |
+| [content-id-to-usage-dandiset-path](https://github.com/dandi-cache/content-id-to-usage-dandiset-path) | 614,868 | 26.0 MB | 80.0 MB (76%) | 2026-10-19 05:16 | content-id-to-dandiset-paths: 2026-10-19 04:27 |
+| [content-id-to-valid-nwb-file](https://github.com/dandi-cache/content-id-to-valid-nwb-file) | 527,808 | 20.8 MB | 80.0 MB (76%) | 2026-10-19 08:05 | content-id-to-nwb-file: 2026-10-19 06:04 |
+| [dandiset-id-to-number-of-assets](https://github.com/dandi-cache/dandiset-id-to-number-of-assets) | 2,246 | 6.7 KB | 80.0 MB (76%) | 2026-10-19 04:39 | — |
+| [dandiset-id-to-title](https://github.com/dandi-cache/dandiset-id-to-title) | 2,246 | 28.7 KB | 80.0 MB (76%) | 2026-10-19 04:31 | — |
+| [dandiset-id-to-total-size](https://github.com/dandi-cache/dandiset-id-to-total-size) | 666 | 6.0 KB | 80.0 MB (76%) | 2026-10-19 06:56 | content-id-to-usage-dandiset-path: 2026-10-19 05:16<br>usage-dandiset-path-to-asset-size: 2026-10-19 06:18 |
+| [qualifying-aind-content-ids](https://github.com/dandi-cache/qualifying-aind-content-ids) | 3,241 | 71.7 KB | 80.0 MB (76%) | 2026-10-19 05:25 | content-id-to-usage-dandiset-path: 2026-10-19 05:16<br>content-id-to-valid-nwb-file: 2026-10-19 00:28<br>qualifying-lfp-content-ids: 2026-10-19 04:50 |
+| [qualifying-lfp-content-ids](https://github.com/dandi-cache/qualifying-lfp-content-ids) | 171,405 | 3.6 MB | 80.0 MB (76%) | 2026-10-19 04:50 | content-id-to-nwb-file: 2026-10-18 21:27<br>content-id-to-valid-nwb-file: 2026-10-19 00:28 |
+| [usage-dandiset-path-to-asset-size](https://github.com/dandi-cache/usage-dandiset-path-to-asset-size) | 600,572 | 14.9 MB | 80.0 MB (76%) | 2026-10-19 06:18 | content-id-to-usage-dandiset-path: 2026-10-19 05:16 |
+| [valid-nwb-file-to-chunk-stats](https://github.com/dandi-cache/valid-nwb-file-to-chunk-stats) | 171,403 | 5.7 MB | 80.0 MB (76%) | 2026-10-19 06:05 | content-id-to-valid-nwb-file: 2026-10-19 00:28 |
+| [valid-nwb-file-to-cophenetic-index](https://github.com/dandi-cache/valid-nwb-file-to-cophenetic-index) | 171,339 | 3.9 MB | 80.0 MB (76%) | 2026-10-19 05:23 | content-id-to-valid-nwb-file: 2026-10-19 00:28 |
+| [valid-nwb-file-to-number-of-datasets](https://github.com/dandi-cache/valid-nwb-file-to-number-of-datasets) | 171,405 | 3.8 MB | 80.0 MB (76%) | 2026-10-19 07:43 | content-id-to-valid-nwb-file: 2026-10-19 00:28 |
+| [valid-nwb-file-to-number-of-groups](https://github.com/dandi-cache/valid-nwb-file-to-number-of-groups) | 171,405 | 3.8 MB | 80.0 MB (76%) | 2026-10-19 10:54 | content-id-to-valid-nwb-file: 2026-10-19 08:05 |
+| [valid-nwb-file-to-out-degrees](https://github.com/dandi-cache/valid-nwb-file-to-out-degrees) | 171,339 | 5.6 MB | 80.0 MB (76%) | 2026-10-19 08:09 | content-id-to-valid-nwb-file: 2026-10-19 08:05 |
+| [valid-nwb-file-to-sackin-index](https://github.com/dandi-cache/valid-nwb-file-to-sackin-index) | 171,405 | 4.3 MB | 80.0 MB (76%) | 2026-10-19 05:04 | content-id-to-valid-nwb-file: 2026-10-19 00:28 |
 
-Generated 2026-10-18 09:53 UTC.
+Generated 2026-10-19 11:04 UTC.
 <!-- status:end -->
 
 Also of interest: [cache-template](https://github.com/dandi-cache/cache-template), the common template with standardized structure, layout, and mechanisms for a typical DANDI Cache; [dandi-cache-utils](https://github.com/dandi-cache/dandi-cache-utils), the shared library and container base image every cache is built on; and [dandi-cache-action](https://github.com/dandi-cache/dandi-cache-action), the composite actions that build those images and run the updates. None of the three is a data cache, so none is registered as a subdataset.
